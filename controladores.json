@@ -1,0 +1,636 @@
+[
+    {
+        "id": "16488c9c1a35c7e9",
+        "type": "tab",
+        "label": "Controle Geral",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "0c97f4a0094618a1",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Aquecendo",
+        "group": "e7f813a5de658fa5",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Aquecendo",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"modo\": \"aquecendo\"}",
+        "payloadType": "json",
+        "topic": "condicionador/controle",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "b2763140b4d0ec29",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Dry",
+        "group": "e7f813a5de658fa5",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Secar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"modo\": \"dry\"}",
+        "payloadType": "json",
+        "topic": "condicionador/controle",
+        "topicType": "str",
+        "x": 610,
+        "y": 80,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "ee91a904a55732cc",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Arrefecendo",
+        "group": "e7f813a5de658fa5",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Arrefecendo",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"modo\": \"arrefecendo\"}",
+        "payloadType": "json",
+        "topic": "condicionador/controle",
+        "topicType": "str",
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "581bbcf38d098d8e",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Ventilando",
+        "group": "e7f813a5de658fa5",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Ventilando",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"modo\": \"ventilando\"}",
+        "payloadType": "json",
+        "topic": "condicionador/controle",
+        "x": 590,
+        "y": 120,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "b409819d1858d6ae",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Desligado",
+        "group": "e7f813a5de658fa5",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Desligado",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"modo\": \"desligado\"}",
+        "payloadType": "json",
+        "topic": "condicionador/controle",
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "2859f1603503f2d7",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Levantada",
+        "group": "9a2297629e7f9158",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Levantada",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"cortina\": 1}",
+        "payloadType": "json",
+        "topic": "cortinas/controle",
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "45d42dbf82694bac",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Parcialmente Levantada",
+        "group": "9a2297629e7f9158",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Parcialmente Levantada",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"cortina\": 2}",
+        "payloadType": "json",
+        "topic": "cortinas/controle",
+        "x": 550,
+        "y": 360,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "3b3d8ae204bb7749",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Fechada",
+        "group": "9a2297629e7f9158",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Fechada",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"cortina\": 0}",
+        "payloadType": "json",
+        "topic": "cortinas/controle",
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "4fa5d547fd81a7fa",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Janela Aberta",
+        "group": "621f207c7c4da12b",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Janela Aberta",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"janela\": 1}",
+        "payloadType": "json",
+        "topic": "janela/controle",
+        "x": 580,
+        "y": 480,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "f101f4b351e2c545",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Janela Parcialmente Aberta",
+        "group": "621f207c7c4da12b",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Janela Parcialmente Aberta",
+        "payload": "{\"janela\": 2}",
+        "payloadType": "json",
+        "topic": "janela/controle",
+        "x": 540,
+        "y": 520,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "db0f296b16e7ca45",
+        "type": "ui_button",
+        "z": "16488c9c1a35c7e9",
+        "name": "Janela Fechada",
+        "group": "621f207c7c4da12b",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Janela Fechada",
+        "payload": "{\"janela\": 0}",
+        "payloadType": "json",
+        "topic": "janela/controle",
+        "x": 580,
+        "y": 560,
+        "wires": [
+            [
+                "f0553c0e56576cc7"
+            ]
+        ]
+    },
+    {
+        "id": "f0553c0e56576cc7",
+        "type": "function",
+        "z": "16488c9c1a35c7e9",
+        "name": "Atualiza Estado",
+        "func": "// Guarda estado atual do flow\nlet estado = flow.get(\"estadoAtual\") || {\n    condicionador: \"desligado\",\n    cortina: 0,\n    janela: 0\n};\n\nif (msg.payload.modo !== undefined) {\n    estado.condicionador = msg.payload.modo;\n}\nif (msg.payload.cortina !== undefined) {\n    estado.cortina = msg.payload.cortina;\n}\nif (msg.payload.janela !== undefined) {\n    estado.janela = msg.payload.janela;\n}\n\nflow.set(\"estadoAtual\", estado);\nmsg.payload = estado;\nreturn msg;",
+        "outputs": 1,
+        "x": 900,
+        "y": 260,
+        "wires": [
+            [
+                "804b55d2e6442250",
+                "88e9d0cdf306f198",
+                "224d7f19d31257c0",
+                "780e325c520cd9c6"
+            ]
+        ]
+    },
+    {
+        "id": "804b55d2e6442250",
+        "type": "mqtt out",
+        "z": "16488c9c1a35c7e9",
+        "name": "MQTT Publish",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "426351299819882a",
+        "x": 1160,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "88e9d0cdf306f198",
+        "type": "function",
+        "z": "16488c9c1a35c7e9",
+        "name": "Texto Condicionador",
+        "func": "msg.payload = \"Condicionador: \" + msg.payload.condicionador;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "224d7f19d31257c0",
+        "type": "function",
+        "z": "16488c9c1a35c7e9",
+        "name": "Texto Cortina",
+        "func": "let texto = \"\";\nswitch(msg.payload.cortina){\n  case 0: texto = \"Cortina: Fechada\"; break;\n  case 1: texto = \"Cortina: Levantada\"; break;\n  case 2: texto = \"Cortina: Parcialmente Levantada\"; break;\n}\nmsg.payload = texto;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "780e325c520cd9c6",
+        "type": "function",
+        "z": "16488c9c1a35c7e9",
+        "name": "Texto Janela",
+        "func": "let texto = \"\";\nswitch(msg.payload.janela){\n  case 0: texto = \"Janela: Fechada\"; break;\n  case 1: texto = \"Janela: Aberta\"; break;\n  case 2: texto = \"Janela: Parcialmente Aberta\"; break;\n}\nmsg.payload = texto;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "939f730414b4f563",
+        "type": "mqtt in",
+        "z": "16488c9c1a35c7e9",
+        "name": "Sub Condicionador",
+        "topic": "status/condicionador",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "426351299819882a",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 570,
+        "y": 40,
+        "wires": [
+            [
+                "32e4608336fdc767"
+            ]
+        ]
+    },
+    {
+        "id": "a5cae24db49192af",
+        "type": "mqtt in",
+        "z": "16488c9c1a35c7e9",
+        "name": "Sub Cortina",
+        "topic": "status/cortina",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "426351299819882a",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "32e4608336fdc767"
+            ]
+        ]
+    },
+    {
+        "id": "4856249931bed269",
+        "type": "mqtt in",
+        "z": "16488c9c1a35c7e9",
+        "name": "Sub Janela",
+        "topic": "status/janela",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "426351299819882a",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "32e4608336fdc767"
+            ]
+        ]
+    },
+    {
+        "id": "32e4608336fdc767",
+        "type": "function",
+        "z": "16488c9c1a35c7e9",
+        "name": "Atualiza Estado via MQTT",
+        "func": "let estado = flow.get(\"estadoAtual\") || {\n    condicionador: \"desligado\",\n    cortina: 0,\n    janela: 0\n};\n\nif (msg.topic === \"status/condicionador\") {\n    estado.condicionador = msg.payload.condicionador;\n}\nif (msg.topic === \"status/cortina\") {\n    estado.cortina = msg.payload.cortina;\n}\nif (msg.topic === \"status/janela\") {\n    estado.janela = msg.payload.janela;\n}\n\nflow.set(\"estadoAtual\", estado);\nmsg.payload = estado;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 300,
+        "wires": [
+            [
+                "88e9d0cdf306f198",
+                "224d7f19d31257c0",
+                "780e325c520cd9c6"
+            ]
+        ]
+    },
+    {
+        "id": "autoSwitch1",
+        "type": "ui_switch",
+        "z": "16488c9c1a35c7e9",
+        "name": "Modo Auto Condicionador",
+        "label": "Modo Manual",
+        "tooltip": "Ativa/desativa modo automático do condicionador",
+        "group": "e7f813a5de658fa5",
+        "order": 0,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "condicionador/mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "{\"modo\":\"manual\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"modo\":\"auto\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 910,
+        "y": 360,
+        "wires": [
+            [
+                "804b55d2e6442250"
+            ]
+        ]
+    },
+    {
+        "id": "155dc8fd4b4c58ad",
+        "type": "ui_switch",
+        "z": "16488c9c1a35c7e9",
+        "name": "Modo Auto Cortinas",
+        "label": "Modo Manual",
+        "tooltip": "Ativa/desativa modo automático das cortinas",
+        "group": "9a2297629e7f9158",
+        "order": 0,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "cortinas/mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "{\"modo\":\"manual\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"modo\":\"auto\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 930,
+        "y": 440,
+        "wires": [
+            [
+                "804b55d2e6442250"
+            ]
+        ]
+    },
+    {
+        "id": "39512d5fe5ef99b4",
+        "type": "ui_switch",
+        "z": "16488c9c1a35c7e9",
+        "name": "Modo Auto Janela",
+        "label": "Modo Manual",
+        "tooltip": "Ativa/desativa modo automático das janelas",
+        "group": "621f207c7c4da12b",
+        "order": 0,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "janela/mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "{\"modo\":\"manual\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"modo\":\"auto\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 930,
+        "y": 400,
+        "wires": [
+            [
+                "804b55d2e6442250"
+            ]
+        ]
+    },
+    {
+        "id": "e7f813a5de658fa5",
+        "type": "ui_group",
+        "name": "Controle Condicionador",
+        "tab": "c4956fdc19e9648b",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9a2297629e7f9158",
+        "type": "ui_group",
+        "name": "Controle Cortinas",
+        "tab": "c4956fdc19e9648b",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "621f207c7c4da12b",
+        "type": "ui_group",
+        "name": "Controle Janela",
+        "tab": "c4956fdc19e9648b",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "426351299819882a",
+        "type": "mqtt-broker",
+        "name": "Broker IoT",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c4956fdc19e9648b",
+        "type": "ui_tab",
+        "name": "Controle Geral",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
