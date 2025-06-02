@@ -1,0 +1,511 @@
+[
+    {
+        "id": "8df6c60679bd0265",
+        "type": "tab",
+        "label": "AirQualitiy Internal",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d615ea909d18ee34",
+        "type": "mqtt in",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "topic": "IPB/IoT/Lab/AirQuality",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "367aa91524101e2e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 340,
+        "wires": [
+            [
+                "407330db934fd89e",
+                "b6141be4adb08a24",
+                "da5b76bc04e52995"
+            ]
+        ]
+    },
+    {
+        "id": "407330db934fd89e",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Parse Temp",
+        "func": "var temp = msg.payload.temp;\nvar tempNum = parseFloat(temp);\n\nmsg.payload = [\n    {\n        measurement: \"temperaturaint\",\n        tags: {\n            origem: \"sensor_temp\"\n        },\n        fields: {\n            temperatura: tempNum,\n            temperatura_str: tempNum.toFixed(1) + \" °C\"\n        },\n        timestamp: Date.now()\n    }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 280,
+        "wires": [
+            [
+                "2ce3553d17ccfe71"
+            ]
+        ]
+    },
+    {
+        "id": "b6141be4adb08a24",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Parse Hum",
+        "func": "var humidity = parseFloat(msg.payload.hum);\n\nmsg.payload = [\n    {\n        measurement: \"humidadeint\",\n        tags: {\n            origem: \"sensor_hum\"\n        },\n        fields: {\n            humidade: humidity,\n            humidade_str: humidity.toFixed(0) + \" %\"\n        },\n        timestamp: Date.now()\n    }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 320,
+        "wires": [
+            [
+                "eff9c07163865b46"
+            ]
+        ]
+    },
+    {
+        "id": "da5b76bc04e52995",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Parse Co2",
+        "func": "var co2_eqv = parseFloat(msg.payload.co2_eqv);\n\nmsg.payload = [\n    {\n        measurement: \"co2int\",\n        tags: {\n            origem: \"sensor_co2\"\n        },\n        fields: {\n            co2_eqv: co2_eqv,\n            co2_eqv_str: co2_eqv.toFixed(0) + \" ppm\"\n        },\n        timestamp: Date.now()\n    }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 360,
+        "wires": [
+            [
+                "32c425de26ca878a"
+            ]
+        ]
+    },
+    {
+        "id": "057236f45f6daa7b",
+        "type": "http request",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Bragança,PT&appid=a0a20e5e8cc537728f52c09810ab936d&units=metric&lang=pt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 810,
+        "y": 440,
+        "wires": [
+            [
+                "2f68c0f91c442e46"
+            ]
+        ]
+    },
+    {
+        "id": "3804def4c0dde024",
+        "type": "debug",
+        "z": "8df6c60679bd0265",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1360,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2f68c0f91c442e46",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Temp e Hum Externas",
+        "func": "var response = msg.payload;\n\nvar temperatura = response.main.temp;\nvar humidade = response.main.humidity;\n\nmsg.payload = [\n  {\n    measurement: \"climaext\",\n    tags: {\n      local: \"bragança\"\n    },\n    fields: {\n      temperatura_str1: temperatura.toFixed(1) + \" °C\",\n      humidade_str1: humidade.toFixed(0) + \" %\"\n    }\n  }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 440,
+        "wires": [
+            [
+                "3804def4c0dde024",
+                "cb4b731a0207d1bc"
+            ]
+        ]
+    },
+    {
+        "id": "1913e4c9f53711aa",
+        "type": "http request",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.ipma.pt/open-data/observation/meteorology/stations/observations.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 810,
+        "y": 580,
+        "wires": [
+            [
+                "40d8fcaf78976532"
+            ]
+        ]
+    },
+    {
+        "id": "40d8fcaf78976532",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Vento",
+        "func": "const estacaoId = \"1200575\";\n\nconst chavesData = Object.keys(msg.payload);\nconst dataHora = chavesData[0];\nconst dadosEstacoes = msg.payload[dataHora];\n\nif (dadosEstacoes && dadosEstacoes[estacaoId]) {\n    const vento = dadosEstacoes[estacaoId].intensidadeVentoKM;\n\n    msg.payload = [\n        {\n            measurement: \"vento\",\n            tags: { estacao: estacaoId },\n            fields: {\n                intensidade_km_h: parseFloat(vento),           // valor numérico\n                intensidade_km_h_str: vento + \" km/h\"          // valor legível\n            },\n            timestamp: new Date(dataHora).getTime()\n        }\n    ];\n} else {\n    msg.payload = [];\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 580,
+        "wires": [
+            [
+                "9feb84dbccc121e4",
+                "c21bc8d1a7f47465"
+            ]
+        ]
+    },
+    {
+        "id": "af2b8b35453ce03a",
+        "type": "http request",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.weatherbit.io/v2.0/current/solar?lat=41.8058&lon=-6.7572&key=bb63fa8d32a94e5cafd5eb0195474871",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 680,
+        "wires": [
+            [
+                "093cbe5ac95afe3a"
+            ]
+        ]
+    },
+    {
+        "id": "093cbe5ac95afe3a",
+        "type": "function",
+        "z": "8df6c60679bd0265",
+        "name": "Lux",
+        "func": "var response = msg.payload.data[0];\n\nvar radiacaoSolar = response.solar_rad;\nvar lux = radiacaoSolar * 120;\nvar luxNum = parseFloat(lux.toFixed(2));\n\nmsg.payload = [\n    {\n        measurement: \"luz\",\n        tags: {\n            origem: \"sensor_estacao\"\n        },\n        fields: {\n            lux: luxNum,                    // valor numérico\n            lux_str: luxNum + \" lux\"        // valor legível como string\n        },\n        timestamp: Date.now()\n    }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 680,
+        "wires": [
+            [
+                "f0e95e0d0333bd0b",
+                "2a3b073a831a8f0d"
+            ]
+        ]
+    },
+    {
+        "id": "e72d18d4c91afa5a",
+        "type": "inject",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "057236f45f6daa7b"
+            ]
+        ]
+    },
+    {
+        "id": "6e8ea05f6b48e81f",
+        "type": "inject",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 550,
+        "y": 580,
+        "wires": [
+            [
+                "1913e4c9f53711aa"
+            ]
+        ]
+    },
+    {
+        "id": "9feb84dbccc121e4",
+        "type": "debug",
+        "z": "8df6c60679bd0265",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "f0e95e0d0333bd0b",
+        "type": "debug",
+        "z": "8df6c60679bd0265",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "bb1878b2e03478cb",
+        "type": "inject",
+        "z": "8df6c60679bd0265",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 550,
+        "y": 680,
+        "wires": [
+            [
+                "af2b8b35453ce03a"
+            ]
+        ]
+    },
+    {
+        "id": "cb4b731a0207d1bc",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1390,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c21bc8d1a7f47465",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1390,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2a3b073a831a8f0d",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1390,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "2ce3553d17ccfe71",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1170,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "32c425de26ca878a",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1170,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "eff9c07163865b46",
+        "type": "influxdb batch",
+        "z": "8df6c60679bd0265",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1170,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "367aa91524101e2e",
+        "type": "mqtt-broker",
+        "name": "Broker IoT ",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "98518577b9fde9f4",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "projetofinal",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    }
+]

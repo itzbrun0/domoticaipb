@@ -1,0 +1,664 @@
+[
+    {
+        "id": "7cb368e318ef0786",
+        "type": "tab",
+        "label": "Wokwi",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "07d7b7a131de0e46",
+        "type": "mqtt in",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "topic": "IPB/IoT/Lab/AirQuality",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "367aa91524101e2e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "aad739c7c3fe90f0",
+                "3f6b4b9449f18a6d",
+                "b0e2211074f61f58"
+            ]
+        ]
+    },
+    {
+        "id": "b85e6424dd848745",
+        "type": "ui_gauge",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temp",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1190,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "aad739c7c3fe90f0",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Parse Temp",
+        "func": "var temp = msg.payload.temp;\n\nreturn { payload: temp };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 260,
+        "wires": [
+            [
+                "b85e6424dd848745",
+                "59334f228b61da79"
+            ]
+        ]
+    },
+    {
+        "id": "3f6b4b9449f18a6d",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Parse Hum",
+        "func": "var hum = msg.payload.hum;\n\nreturn { payload:hum };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 300,
+        "wires": [
+            [
+                "2c4f4ee43c3b78e7",
+                "1d34feaf145d4ed0"
+            ]
+        ]
+    },
+    {
+        "id": "2c4f4ee43c3b78e7",
+        "type": "ui_gauge",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1200,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "59334f228b61da79",
+        "type": "ui_chart",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Temp",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff0000",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1220,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d34feaf145d4ed0",
+        "type": "ui_chart",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Humidity",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0033ff",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1230,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b0e2211074f61f58",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Parse Co2",
+        "func": "var co2_eqv = msg.payload.co2_eqv;\n\nreturn { payload: co2_eqv };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 340,
+        "wires": [
+            [
+                "ccbfee8695c33efc",
+                "41b7a555dfe02d6f"
+            ]
+        ]
+    },
+    {
+        "id": "ccbfee8695c33efc",
+        "type": "ui_gauge",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Co2",
+        "label": "ppm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1190,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "41b7a555dfe02d6f",
+        "type": "ui_chart",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "group": "5a644a573b0cca19",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "label": "Historico Co2",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "5000",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0033ff",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1220,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d196738b27ad008a",
+        "type": "http request",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Bragança,PT&appid=a0a20e5e8cc537728f52c09810ab936d&units=metric&lang=pt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 480,
+        "wires": [
+            [
+                "d0f3a3c97196570e"
+            ]
+        ]
+    },
+    {
+        "id": "7ef588262accbd5a",
+        "type": "debug",
+        "z": "7cb368e318ef0786",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d0f3a3c97196570e",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Temp e Hum Externas",
+        "func": "var response = msg.payload;\n\nvar temperatura = response.main.temp;\nvar humidade = response.main.humidity;\n\nmsg.payload = {\n  \"Temperatura (°C)\": temperatura,\n  \"Humidade (%)\": humidade\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 480,
+        "wires": [
+            [
+                "7ef588262accbd5a"
+            ]
+        ]
+    },
+    {
+        "id": "921c236756ae48ef",
+        "type": "http request",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.ipma.pt/open-data/observation/meteorology/stations/observations.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 560,
+        "wires": [
+            [
+                "715120a11da9b77c"
+            ]
+        ]
+    },
+    {
+        "id": "715120a11da9b77c",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Vento",
+        "func": "const estacaoId = \"1200575\";\n\nconst chavesData = Object.keys(msg.payload);\nconst dataHora = chavesData[0];\nconst dadosEstacoes = msg.payload[dataHora];\n\nif (dadosEstacoes && dadosEstacoes[estacaoId]) {\n    const intensidadeVento = dadosEstacoes[estacaoId].intensidadeVentoKM;\n    msg.payload = { intensidadeVento: intensidadeVento }; // só o valor, sem timestamp\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            [
+                "21f0457135dad6fd",
+                "a77441318db7dd80"
+            ]
+        ]
+    },
+    {
+        "id": "952119c1b91e4181",
+        "type": "http request",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.weatherbit.io/v2.0/current/solar?lat=41.8058&lon=-6.7572&key=bb63fa8d32a94e5cafd5eb0195474871",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 750,
+        "y": 680,
+        "wires": [
+            [
+                "afb2c192cd0677c2"
+            ]
+        ]
+    },
+    {
+        "id": "afb2c192cd0677c2",
+        "type": "function",
+        "z": "7cb368e318ef0786",
+        "name": "Lux",
+        "func": "var response = msg.payload.data[0]; // pegar o primeiro objeto do array data\n\nvar radiacaoSolar = response.solar_rad;  // radiação solar em W/m²\n\n// Converter radiação solar para lux (estimativa)\nvar lux = radiacaoSolar * 120;\n\nmsg.payload = { lux: parseFloat(lux.toFixed(2)) }; // só o valor, dentro de objeto com chave 'lux'\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 680,
+        "wires": [
+            [
+                "1b81214aa9d60289",
+                "68f263ab2b8c9457"
+            ]
+        ]
+    },
+    {
+        "id": "30d26a8633bd7c88",
+        "type": "inject",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 530,
+        "y": 480,
+        "wires": [
+            [
+                "d196738b27ad008a"
+            ]
+        ]
+    },
+    {
+        "id": "1b81214aa9d60289",
+        "type": "mqtt out",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "topic": "IPB/IoT/Lab/ExternalLux/response",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "367aa91524101e2e",
+        "x": 1280,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "21f0457135dad6fd",
+        "type": "mqtt out",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "topic": "IPB/IoT/Lab/ExternalWind/response",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "367aa91524101e2e",
+        "x": 1340,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d15c593a32094f0c",
+        "type": "inject",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "921c236756ae48ef"
+            ]
+        ]
+    },
+    {
+        "id": "a77441318db7dd80",
+        "type": "debug",
+        "z": "7cb368e318ef0786",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "68f263ab2b8c9457",
+        "type": "debug",
+        "z": "7cb368e318ef0786",
+        "name": "debug 29",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "696406c21715fc81",
+        "type": "inject",
+        "z": "7cb368e318ef0786",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 530,
+        "y": 680,
+        "wires": [
+            [
+                "952119c1b91e4181"
+            ]
+        ]
+    },
+    {
+        "id": "367aa91524101e2e",
+        "type": "mqtt-broker",
+        "name": "Broker IoT ",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5a644a573b0cca19",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "2112f6218588b694",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2112f6218588b694",
+        "type": "ui_tab",
+        "name": "Dashboard Sol",
+        "icon": "dashboard",
+        "order": 8
+    }
+]

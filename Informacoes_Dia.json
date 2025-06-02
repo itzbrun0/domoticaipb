@@ -1,0 +1,577 @@
+[
+    {
+        "id": "a18484092a776418",
+        "type": "tab",
+        "label": "ProjetoFinal",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f6d0aad96fcb4c4c",
+        "type": "inject",
+        "z": "a18484092a776418",
+        "name": "Iniciar fluxo",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "90dcddfdcd5d0d75"
+            ]
+        ]
+    },
+    {
+        "id": "90dcddfdcd5d0d75",
+        "type": "http request",
+        "z": "a18484092a776418",
+        "name": "Requisição à API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.sunrisesunset.io/json?lat=41.28964&lng=-8.37584&date_start=2025-05-13&date_end=2025-05-20",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "c30c93ffb6589afc"
+            ]
+        ]
+    },
+    {
+        "id": "c30c93ffb6589afc",
+        "type": "function",
+        "z": "a18484092a776418",
+        "name": "Duração do ultimos 7 dias",
+        "func": "// Obtém a data de hoje\nlet hoje = new Date();\n\n// Calcula a data de 7 dias atrás\nlet seteDiasAtras = new Date();\nseteDiasAtras.setDate(hoje.getDate() - 7);\n\n// Formata as datas no formato YYYY-MM-DD\nlet dataAtual = hoje.toISOString().split('T')[0]; // Formato: 2025-05-13\nlet dataSeteDiasAtras = seteDiasAtras.toISOString().split('T')[0]; // Formato: 2025-05-06\n\n// Acesso aos dados do payload\nlet resultados = msg.payload.results; \nlet duracoesDia = [];\n\nfor (let i = 0; i < resultados.length; i++) {\n    let dayLength = resultados[i].day_length; // Acessa o day_length\n    let partes = dayLength.split(':'); // Divide a duração (HH:mm:ss)\n    let horas = parseInt(partes[0]); // Pega as horas\n    let minutos = parseInt(partes[1]); // Pega os minutos\n    let data = resultados[i].date; // Acessa a data\n\n    // Verifica se a data está dentro do intervalo de 7 dias atrás até hoje\n    if (data >= dataSeteDiasAtras && data <= dataAtual) {\n        // Formata a duração como \"X horas e Y minutos\" com a data\n        duracoesDia.push(`Data: ${data} - Duração do Dia: ${horas} horas e ${minutos} minutos`);\n    }\n}\n\nmsg.payload = duracoesDia; // Retorna o resultado formatado\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "4d9b6c08ebdcf857"
+            ]
+        ]
+    },
+    {
+        "id": "4d9b6c08ebdcf857",
+        "type": "debug",
+        "z": "a18484092a776418",
+        "name": "Resultado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "in7dias",
+        "type": "inject",
+        "z": "a18484092a776418",
+        "name": "Ver duração 7 dias",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "http7dias"
+            ]
+        ]
+    },
+    {
+        "id": "http7dias",
+        "type": "http request",
+        "z": "a18484092a776418",
+        "name": "Requisição à API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.sunrisesunset.io/json?lat=41.28964&lng=-8.37584&date_start=2025-05-26&date_end=2025-06-01",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 610,
+        "y": 520,
+        "wires": [
+            [
+                "func7dias"
+            ]
+        ]
+    },
+    {
+        "id": "func7dias",
+        "type": "function",
+        "z": "a18484092a776418",
+        "name": "Formatar 7 dias",
+        "func": "const results = msg.payload.results.slice(0, 7);\n\nconst labels = [\"-7 dia\", \"-6 dia\", \"-5 dia\", \"-4 Dia\", \"-3 Dia\", \"-2 Dia\", \"-1 Dia\"];\n\nconst cards = results.map((dia, i) => {\n    let partes = dia.day_length.split(\":\");\n    let horas = parseInt(partes[0]);\n    let minutos = parseInt(partes[1]);\n    return {\n        template: `\n        <div style='text-align:center;'>\n            <h3>${labels[i]}</h3>\n            <p><b>Data:</b> ${dia.date}</p>\n            <p><b>Nascer:</b> ${dia.sunrise}</p>\n            <p><b>Pôr:</b> ${dia.sunset}</p>\n            <p><b>Duração:</b> ${horas}h ${minutos}min</p>\n        </div>`\n    };\n});\n\nreturn cards;\n",
+        "outputs": 7,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 520,
+        "wires": [
+            [
+                "dia1"
+            ],
+            [
+                "dia2"
+            ],
+            [
+                "dia3"
+            ],
+            [
+                "dia4"
+            ],
+            [
+                "dia5"
+            ],
+            [
+                "dia6"
+            ],
+            [
+                "dia7"
+            ]
+        ]
+    },
+    {
+        "id": "dia1",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 1",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia2",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 2",
+        "order": 2,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia3",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 3",
+        "order": 3,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia4",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 4",
+        "order": 4,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia5",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 5",
+        "order": 5,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia6",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 6",
+        "order": 6,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dia7",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grpDuracao",
+        "name": "Dia 7",
+        "order": 7,
+        "width": 4,
+        "height": 3,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "02a935faae5d8f93",
+        "type": "inject",
+        "z": "a18484092a776418",
+        "name": "Iniciar fluxo",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "ac0f6af2b8a65eb0"
+            ]
+        ]
+    },
+    {
+        "id": "ac0f6af2b8a65eb0",
+        "type": "http request",
+        "z": "a18484092a776418",
+        "name": "Requisição à API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.sunrise-sunset.org/json?lat=41.28964&lng=-8.37584&formatted=0",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 300,
+        "wires": [
+            [
+                "b101c2836bf1bbb1"
+            ]
+        ]
+    },
+    {
+        "id": "b101c2836bf1bbb1",
+        "type": "function",
+        "z": "a18484092a776418",
+        "name": "Dia Atual / Nascer e Pôr do Sol + Duração",
+        "func": "var response = msg.payload;\nvar sunrise = new Date(response.results.sunrise);\nvar sunset = new Date(response.results.sunset);\nvar date = sunrise.toISOString().substring(0, 10);\n\nvar dayLengthInSeconds = response.results.day_length;\nvar hours = Math.floor(dayLengthInSeconds / 3600);\nvar minutes = Math.floor((dayLengthInSeconds % 3600) / 60);\n\nvar dayLengthFormatted = hours + \" horas e \" + minutes + \" minutos\";\n\nvar sunriseFormatted = sunrise.toISOString().substring(11, 16);\nvar sunsetFormatted = sunset.toISOString().substring(11, 16);\n\nmsg.template = `\n    <div style='text-align:center; padding:10px;'>\n        <h3>${date}</h3>\n        <p><b>Nascer do Sol:</b> ${sunriseFormatted}</p>\n        <p><b>Pôr do Sol:</b> ${sunsetFormatted}</p>\n        <p><b>Duração:</b> ${dayLengthFormatted}</p>\n    </div>`;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 300,
+        "wires": [
+            [
+                "b976c9cb3b17029b"
+            ]
+        ]
+    },
+    {
+        "id": "b976c9cb3b17029b",
+        "type": "ui_template",
+        "z": "a18484092a776418",
+        "group": "grupoDiaAtual",
+        "name": "Dia Atual",
+        "order": 1,
+        "width": 7,
+        "height": "3",
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1160,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f0b398e.c70938",
+        "type": "http request",
+        "z": "a18484092a776418",
+        "name": "Requisição à API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.sunrise-sunset.org/json?lat=41.28964&lng=-8.37584&formatted=0",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "f3c84fdb.1d38c"
+            ]
+        ]
+    },
+    {
+        "id": "f3c84fdb.1d38c",
+        "type": "function",
+        "z": "a18484092a776418",
+        "name": "Dia Atual / Nascer e Pôr do Sol + Duração",
+        "func": "var response = msg.payload;\nvar sunrise = new Date(response.results.sunrise); // Converter para objeto Date\nvar sunset = new Date(response.results.sunset);   // Converter para objeto Date\nvar date = sunrise.toISOString().substring(0, 10); // Extrair a data (AAAA-MM-DD)\n\n// Calcular a duração do dia em horas e minutos\nvar dayLengthInSeconds = response.results.day_length;\nvar hours = Math.floor(dayLengthInSeconds / 3600);  // Horas\nvar minutes = Math.floor((dayLengthInSeconds % 3600) / 60); // Minutos\n\n// Formatar a duração do dia\nvar dayLengthFormatted = hours + \" horas e \" + minutes + \" minutos\";\n\n// Formatar as horas de nascer e pôr do sol para o formato de horas e minutos\nvar sunriseFormatted = sunrise.toISOString().substring(11, 16); // Apenas hora e minuto\nvar sunsetFormatted = sunset.toISOString().substring(11, 16);   // Apenas hora e minuto\n\n// Construir payload para o InfluxDB com os campos legíveis e a duração em segundos (numérico)\nmsg.payload = [\n    {\n        measurement: \"sun_info\",\n        tags: {\n            location: \"porto\"\n        },\n        fields: {\n            data: date,\n            nascer_do_sol_str: sunriseFormatted,      // campo string novo\n            por_do_sol_str: sunsetFormatted,          // campo string novo\n            duracao_do_dia_segundos: dayLengthInSeconds,\n            duracao_do_dia_legivel: dayLengthFormatted\n        }\n    }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 100,
+        "wires": [
+            [
+                "84f0d4a8193b1ae8",
+                "798279d23156e985"
+            ]
+        ]
+    },
+    {
+        "id": "be8ac2a7498da516",
+        "type": "inject",
+        "z": "a18484092a776418",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "6f0b398e.c70938"
+            ]
+        ]
+    },
+    {
+        "id": "84f0d4a8193b1ae8",
+        "type": "debug",
+        "z": "a18484092a776418",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "798279d23156e985",
+        "type": "influxdb batch",
+        "z": "a18484092a776418",
+        "influxdb": "98518577b9fde9f4",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "IPB",
+        "bucket": "ProjetoFinal",
+        "x": 1030,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "ff79fbc3d33a7b14",
+        "type": "ui_spacer",
+        "z": "a18484092a776418",
+        "name": "spacer",
+        "group": "",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "grpDuracao",
+        "type": "ui_group",
+        "name": "Duração do Dia",
+        "tab": "8d31835d3a15c8ab",
+        "order": 2,
+        "disp": true,
+        "width": 28,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grupoDiaAtual",
+        "type": "ui_group",
+        "name": "Dia de Hoje - Nascer/Pôr do Sol",
+        "tab": "8d31835d3a15c8ab",
+        "order": 1,
+        "disp": true,
+        "width": 7,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "98518577b9fde9f4",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "projetofinal",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "8d31835d3a15c8ab",
+        "type": "ui_tab",
+        "name": "Temp/Hum",
+        "icon": "dashboard",
+        "order": 7,
+        "disabled": false,
+        "hidden": false
+    }
+]
